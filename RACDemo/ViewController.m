@@ -7,7 +7,8 @@
 //
 
 #import "ViewController.h"
-
+//导入RAC框架
+#import "ReactiveObjC.h"
 @interface ViewController ()
 
 @end
@@ -16,14 +17,23 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view, typically from a nib.
+//    信号的三步骤：创建信号、订阅信号、发送信号
+    //创建信号（刚创建时，未被订阅，称为冷信号）
+    RACSignal *singal = [RACSignal createSignal:^RACDisposable * _Nullable(id<RACSubscriber>  _Nonnull subscriber) {//subscriber订阅者
+        //发送信号
+        [subscriber sendNext:@"This is RAC"];
+        return nil;
+    }];
+    //    订阅信号
+    [singal subscribeNext:^(id  _Nullable x) {//x信号的内容
+        NSLog(@"%@",x);
+    }];
+
+    
+    
+    
 }
 
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
 
 
 @end
